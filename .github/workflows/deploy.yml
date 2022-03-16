@@ -1,4 +1,4 @@
-name: front deploy for dev
+name: deploy
 
 on:
   workflow_dispatch:
