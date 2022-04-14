@@ -1,10 +1,5 @@
 {
-  "/admin/line": "pages/admin/line.html",
-  "/admin/section": "pages/admin/section.html",
-  "/admin/station": "pages/admin/station.html",
-  "/": "pages/index.html",
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/404": "pages/404.html"
+  "/_document": "pages/_document.js"
 }

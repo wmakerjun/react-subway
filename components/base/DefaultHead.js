@@ -1,7 +1,14 @@
 import React from "react";
 import Head from "next/head";
 
-const DefaultHead = ({ title, keywords, description }) => {
+const DEFAULT_HEAD = {
+  title: "지하철 노선도",
+  keywords: "지하철, 노선도, 지하철 노선도",
+  description: "지하철 노선도 관리 페이지.",
+};
+
+const DefaultHead = ({ head = DEFAULT_HEAD }) => {
+  const { title, keywords, description } = head;
   return (
     <Head>
       <title>{title}</title>
@@ -18,12 +25,6 @@ const DefaultHead = ({ title, keywords, description }) => {
       />
     </Head>
   );
-};
-
-DefaultHead.defaultProps = {
-  title: "지하철 노선도",
-  keywords: "지하철, 노선도, 지하철 노선도",
-  description: "지하철 노선도 관리 페이지.",
 };
 
 export default DefaultHead;

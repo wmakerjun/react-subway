@@ -1,17 +1,71 @@
-import DefaultHead from "../../components/base/DefaultHead";
-import Header from "../../components/base/Header";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Card,
+  CardContent,
+  List,
+  Typography,
+  Divider,
+} from "@mui/material";
 import Layout from "../../components/base/Layout";
+import LineItem from "../../components/line/LineItem";
+import LineCreateDialogButton from "../../components/line/LineCreateDialogButton";
+import stationApi from "../../apis/stationApi";
+import lineApi from "../../apis/lineApi";
+import { HEAD } from "../../constants";
 
-export default function Line() {
-  const head = {
-    title: "노선 관리",
-    keywords: "지하철, 노선도, 지하철 노선도, 노선 관리",
-    description: "지하철 노선도 노선 관리 페이지.",
+export default function LineAdmin() {
+  const [stations, setStations] = useState([]);
+  const [lines, setLines] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const stationResponse = await stationApi.getAll();
+      const lineResponse = await lineApi.getAll();
+      setStations([...stationResponse]);
+      setLines([...lineResponse]);
+    };
+    fetchData();
+  }, []);
+
+  const onDelete = async (id) => {
+    if (!confirm("정말로 삭제하시겠습니까?")) return;
+    try {
+      await lineApi.delete(id);
+      const lines = await lineApi.getAll();
+      setLines([...lines]);
+    } catch (e) {
+      throw new Error(e);
+    }
   };
 
   return (
-    <Layout head={head}>
-      <h1 className="title">노선 관리 페이지에 오신것을 환영합니다</h1>
+    <Layout head={HEAD.LINE}>
+      <Card sx={{ width: 500, borderTop: "8px solid #ffc107" }}>
+        <CardContent>
+          <Typography variant="h6" sx={{ mt: 1, mb: 2, textAlign: "center" }}>
+            노선 관리
+          </Typography>
+          <Divider />
+          <LineCreateDialogButton setLines={setLines} />
+          <Box>
+            <Typography variant="h6" sx={{ ml: 2 }}>
+              노선 목록
+            </Typography>
+            <List data-cy="line-list">
+              {lines.map((line) => (
+                <LineItem
+                  key={line.id}
+                  line={line}
+                  stations={stations}
+                  onDelete={onDelete}
+                  setLines={setLines}
+                />
+              ))}
+            </List>
+          </Box>
+        </CardContent>
+      </Card>
     </Layout>
   );
 }

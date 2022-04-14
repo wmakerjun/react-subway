@@ -6,8 +6,12 @@ import Button from "@mui/material/Button";
 import Link from "next/link";
 import HomeIcon from "@mui/icons-material/Home";
 import IconButton from "@mui/material/IconButton";
+import { apiUrlState } from "../../states";
+import { useRecoilState } from "recoil";
 
 const Header = () => {
+  const [apiUrl] = useRecoilState(apiUrlState);
+
   const navLinks = [
     {
       title: "역 관리",
@@ -21,10 +25,14 @@ const Header = () => {
       title: "구간 관리",
       link: "/admin/section",
     },
+    {
+      title: "경로 검색",
+      link: "/admin/path",
+    },
   ];
 
   return (
-    <header>
+    <header data-api={apiUrl}>
       <AppBar position="fixed" elevation={0}>
         <Toolbar>
           <Link href="/">

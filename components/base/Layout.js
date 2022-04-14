@@ -26,9 +26,8 @@ export default function Layout({ children, head }) {
           <DefaultHead head={head} />
           <Header />
           <main>
-            <Container sx={{ mt: 10 }}>{children}</Container>
+            <Container sx={{ mt: 12, display: "flex", justifyContent: "center" }}>{children}</Container>
           </main>
-          {/* <Footer /> */}
           <style jsx global>{`
             html,
             body {

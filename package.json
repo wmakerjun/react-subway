@@ -16,12 +16,17 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.6.0",
     "@mui/material": "^5.6.0",
+    "axios": "^0.26.1",
     "next": "latest",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-color": "^2.19.3",
+    "react-dom": "17.0.2",
+    "recoil": "^0.7.1"
   },
   "devDependencies": {
-    "cypress": "8.2.0",
+    "babel-plugin-react-remove-properties": "^0.3.0",
+    "cypress": "^8.2.0",
+    "prettier": "^2.6.2",
     "start-server-and-test": "1.13.1"
   }
 }
