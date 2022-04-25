@@ -1,6 +1,6 @@
 ## 🚀 Getting Started
 
-#### local 구동
+#### 로컬 동작시
 
 ```
 npm install
@@ -10,7 +10,7 @@ npm install
 npm run dev
 ```
 
-### 배포시
+#### 배포시
 ```
 npm run prod
 ```
