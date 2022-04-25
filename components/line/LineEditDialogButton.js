@@ -18,8 +18,14 @@ import Select from "@mui/material/Select";
 import EditIcon from "@mui/icons-material/Edit";
 import lineApi from "../../apis/lineApi";
 import stationApi from "../../apis/stationApi";
+import { SNACKBAR_MESSAGES } from "../../constants";
 
-export default function LineEditDialogButton({ line, setLines }) {
+export default function LineEditDialogButton({
+  line,
+  setLines,
+  setSnackbar,
+  setMessage,
+}) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState(line.name);
   const [stations, setStations] = useState([]);
@@ -54,11 +60,13 @@ export default function LineEditDialogButton({ line, setLines }) {
         downStationId,
         color,
       });
+      setMessage(SNACKBAR_MESSAGES.LINE.UPDATE.SUCCESS);
       const lines = await lineApi.getAll();
       setLines([...lines]);
     } catch (e) {
-      throw new Error(e);
+      setMessage(SNACKBAR_MESSAGES.COMMON.FAIL);
     } finally {
+      setSnackbar(true);
       onClose();
     }
   };
@@ -91,10 +99,10 @@ export default function LineEditDialogButton({ line, setLines }) {
                 />
               </FormControl>
               <FormControl sx={{ my: 1 }} fullWidth>
-                <InputLabel id="up-station-label">상행 종점</InputLabel>
+                <InputLabel id="up-station-label">상행 종점 *</InputLabel>
                 <Select
                   labelId="up-station-label"
-                  label="상행 종점"
+                  label="상행 종점 *"
                   value={upStationId || ""}
                   onChange={(e) => setUpStationId(e.target.value)}
                   required
@@ -111,11 +119,11 @@ export default function LineEditDialogButton({ line, setLines }) {
                 </Select>
               </FormControl>
               <FormControl sx={{ my: 1 }} fullWidth>
-                <InputLabel id="down-station-label">하행 종점</InputLabel>
+                <InputLabel id="down-station-label">하행 종점 *</InputLabel>
                 <Select
                   labelId="down-station-label"
                   value={downStationId || ""}
-                  label="하행 종점"
+                  label="하행 종점 *"
                   onChange={(e) => setDownStationId(e.target.value)}
                   required
                 >
@@ -168,7 +176,7 @@ export default function LineEditDialogButton({ line, setLines }) {
             </DialogContent>
             <DialogActions>
               <Button variant="contained" type="submit" disableElevation>
-                생성
+                수정
               </Button>
             </DialogActions>
           </form>

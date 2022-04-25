@@ -5,4 +5,9 @@ const apiUrlState = atom({
   default: "http://localhost:8080",
 });
 
-export { apiUrlState };
+const snackbarState = atom({
+  key: "snackbarState",
+  default: false,
+});
+
+export { apiUrlState, snackbarState };

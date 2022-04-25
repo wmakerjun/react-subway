@@ -15,12 +15,17 @@ import SectionCreateDialogButton from "../../components/section/SectionCreateDia
 import LineStationItem from "../../components/section/LineStationItem";
 import lineApi from "../../apis/lineApi";
 import { stationApi } from "../../apis";
-import { HEAD } from "../../constants";
+import { HEAD, SNACKBAR_MESSAGES } from "../../constants";
+import { useRecoilState } from "recoil";
+import { snackbarState } from "../../states";
+import CustomSnackbar from "../../components/shared/Snackbar";
 
 export default function Section() {
   const [line, setLine] = useState({});
   const [stations, setStations] = useState([]);
   const [lines, setLines] = useState([]);
+  const [snackbar, setSnackbar] = useRecoilState(snackbarState);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,10 +44,13 @@ export default function Section() {
         lineId: line.id,
         stationId: stationId,
       });
+      setMessage(SNACKBAR_MESSAGES.SECTION.DELETE.SUCCESS);
       const lineResponse = await lineApi.get(line.id);
       setLine({ ...lineResponse });
-    } catch (e) {
-      throw new Error(e);
+    } catch {
+      setMessage(SNACKBAR_MESSAGES.COMMON.FAIL);
+    } finally {
+      setSnackbar(true);
     }
   };
 
@@ -98,6 +106,8 @@ export default function Section() {
                     line={line}
                     stations={stations}
                     setLine={setLine}
+                    setSnackbar={setSnackbar}
+                    setMessage={setMessage}
                   />
                   {line.stations.map((station) => (
                     <LineStationItem
@@ -112,6 +122,7 @@ export default function Section() {
           )}
         </CardContent>
       </Card>
+      <CustomSnackbar message={message} />
     </Layout>
   );
 }

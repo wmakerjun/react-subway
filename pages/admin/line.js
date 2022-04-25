@@ -12,11 +12,16 @@ import LineItem from "../../components/line/LineItem";
 import LineCreateDialogButton from "../../components/line/LineCreateDialogButton";
 import stationApi from "../../apis/stationApi";
 import lineApi from "../../apis/lineApi";
-import { HEAD } from "../../constants";
+import { HEAD, SNACKBAR_MESSAGES } from "../../constants";
+import { snackbarState } from "../../states";
+import CustomSnackbar from "../../components/shared/Snackbar";
+import { useRecoilState } from "recoil";
 
 export default function LineAdmin() {
   const [stations, setStations] = useState([]);
   const [lines, setLines] = useState([]);
+  const [snackbar, setSnackbar] = useRecoilState(snackbarState);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,8 +39,11 @@ export default function LineAdmin() {
       await lineApi.delete(id);
       const lines = await lineApi.getAll();
       setLines([...lines]);
-    } catch (e) {
-      throw new Error(e);
+      setMessage(SNACKBAR_MESSAGES.LINE.DELETE.SUCCESS);
+    } catch {
+      setMessage(SNACKBAR_MESSAGES.COMMON.FAIL);
+    } finally {
+      setSnackbar(true);
     }
   };
 
@@ -47,7 +55,11 @@ export default function LineAdmin() {
             노선 관리
           </Typography>
           <Divider />
-          <LineCreateDialogButton setLines={setLines} />
+          <LineCreateDialogButton
+            setLines={setLines}
+            setSnackbar={setSnackbar}
+            setMessage={setMessage}
+          />
           <Box>
             <Typography variant="h6" sx={{ ml: 2 }}>
               노선 목록
@@ -60,12 +72,15 @@ export default function LineAdmin() {
                   stations={stations}
                   onDelete={onDelete}
                   setLines={setLines}
+                  setSnackbar={setSnackbar}
+                  setMessage={setMessage}
                 />
               ))}
             </List>
           </Box>
         </CardContent>
       </Card>
+      <CustomSnackbar message={message} />
     </Layout>
   );
 }

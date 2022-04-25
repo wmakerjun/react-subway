@@ -15,10 +15,16 @@ import Layout from "../../components/base/Layout";
 import DirectionsSubwayIcon from "@mui/icons-material/DirectionsSubway";
 import StationListItem from "../../components/station/StationListItem";
 import stationApi from "../../apis/stationApi";
-import { HEAD } from "../../constants";
+import { HEAD, SNACKBAR_MESSAGES } from "../../constants";
+import CustomSnackbar from "../../components/shared/Snackbar";
+import { useRecoilState } from "recoil";
+import { snackbarState } from "../../states";
 
 export default function StationAdmin() {
+  const [name, setName] = useState("");
   const [stations, setStations] = useState([]);
+  const [snackbar, setSnackbar] = useRecoilState(snackbarState);
+  const [message, setMessages] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,13 +37,15 @@ export default function StationAdmin() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await stationApi.create({ name: e.target.name.value });
+      await stationApi.create({ name });
       const response = await stationApi.getAll();
       setStations([...response]);
+      setMessages(SNACKBAR_MESSAGES.STATION.CREATE.SUCCESS);
     } catch (e) {
-      throw new Error(e);
+      setMessages(SNACKBAR_MESSAGES.COMMON.FAIL);
     } finally {
-      e.target.name.value = "";
+      setName("");
+      setSnackbar(true);
     }
   };
 
@@ -47,8 +55,11 @@ export default function StationAdmin() {
       await stationApi.delete({ id });
       const response = await stationApi.getAll();
       setStations([...response]);
-    } catch (e) {
-      throw new Error(e);
+      setMessages(SNACKBAR_MESSAGES.STATION.DELETE.SUCCESS);
+    } catch {
+      setMessages(SNACKBAR_MESSAGES.COMMON.FAIL);
+    } finally {
+      setSnackbar(true);
     }
   };
 
@@ -68,6 +79,8 @@ export default function StationAdmin() {
                   sx={{ m: 1, width: "100%" }}
                   size="small"
                   name="name"
+                  value={name || ""}
+                  onChange={(e) => setName(e.target.value)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -82,6 +95,7 @@ export default function StationAdmin() {
                   variant="contained"
                   disableElevation
                   type="submit"
+                  disabled={name.length < 1}
                 >
                   추가
                 </Button>
@@ -107,6 +121,7 @@ export default function StationAdmin() {
           </Box>
         </CardContent>
       </Card>
+      <CustomSnackbar message={message} />
     </Layout>
   );
 }

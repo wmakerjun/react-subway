@@ -10,16 +10,26 @@ import {
   Typography,
 } from "@mui/material";
 import { useRecoilState } from "recoil";
-import React from "react";
-import { apiUrlState } from "../states";
+import React, { useState } from "react";
+import { apiUrlState, snackbarState } from "../states";
+import CustomSnackbar from "../components/shared/Snackbar";
+import { SNACKBAR_MESSAGES } from "../constants";
 
 export default function Home() {
   const [apiUrl, setApiUrl] = useRecoilState(apiUrlState);
+  const [snackbar, setSnackbar] = useRecoilState(snackbarState);
+  const [message, setMessages] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setApiUrl(e.target.url.value);
-    alert("변경이 완료되었습니다.");
+    try {
+      setApiUrl(e.target.url.value);
+      setMessages(SNACKBAR_MESSAGES.API.SUCCESS);
+    } catch (e) {
+      setMessages(SNACKBAR_MESSAGES.COMMON.FAIL);
+    } finally {
+      setSnackbar(true);
+    }
   };
 
   return (
@@ -65,6 +75,7 @@ export default function Home() {
           </Box>
         </CardContent>
       </Card>
+      <CustomSnackbar message={message} />
     </Layout>
   );
 }

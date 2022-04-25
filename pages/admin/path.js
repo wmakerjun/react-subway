@@ -16,13 +16,18 @@ import stationApi from "../../apis/stationApi";
 import pathApi from "../../apis/pathApi";
 import PathResult from "../../components/path/PathResult";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { HEAD } from "../../constants";
+import { HEAD, SNACKBAR_MESSAGES } from "../../constants";
+import { useRecoilState } from "recoil";
+import { snackbarState } from "../../states";
+import CustomSnackbar from "../../components/shared/Snackbar";
 
 export default function PathAdmin() {
   const [stations, setStations] = useState([]);
   const [sourceStationId, setSourceStationId] = useState("");
   const [targetStationId, setTargetStationId] = useState("");
   const [pathResult, setPathResult] = useState("");
+  const [snackbar, setSnackbar] = useRecoilState(snackbarState);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,8 +45,11 @@ export default function PathAdmin() {
         targetId: targetStationId,
       });
       setPathResult({ ...response });
-    } catch (e) {
-      throw new Error(e);
+      setMessage(SNACKBAR_MESSAGES.PATH.FIND.SUCCESS);
+    } catch {
+      setMessage(SNACKBAR_MESSAGES.PATH.FIND.FAIL);
+    } finally {
+      setSnackbar(true);
     }
   };
 
@@ -104,6 +112,7 @@ export default function PathAdmin() {
           </Box>
         </CardContent>
       </Card>
+      <CustomSnackbar message={message} />
     </Layout>
   );
 }

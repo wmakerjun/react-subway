@@ -15,11 +15,14 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import lineApi from "../../apis/lineApi";
 import AddIcon from "@mui/icons-material/Add";
+import { SNACKBAR_MESSAGES } from "../../constants";
 
 export default function SectionCreateDialogButton({
   line,
   stations = [],
   setLine,
+  setSnackbar,
+  setMessage,
 }) {
   const [open, setOpen] = useState(false);
   const [distance, setDistance] = useState(0);
@@ -45,11 +48,14 @@ export default function SectionCreateDialogButton({
           distance,
         },
       });
+      setMessage(SNACKBAR_MESSAGES.SECTION.CREATE.SUCCESS);
       const data = await lineApi.get(line.id);
       setLine({ ...data });
       onClose();
-    } catch (e) {
-      throw new Error(e);
+    } catch {
+      setMessage(SNACKBAR_MESSAGES.COMMON.FAIL);
+    } finally {
+      setSnackbar(true);
     }
   };
 

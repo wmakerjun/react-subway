@@ -4,19 +4,24 @@ import DirectionsSubwayIcon from "@mui/icons-material/DirectionsSubway";
 import LineDeleteButton from "./LineDeleteButton";
 import LineEditDialogButton from "./LineEditDialogButton";
 
-export default function LineItem({ line, onDelete, setLines }) {
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  const toggleEditMode = () => {
-    setIsEditMode(!isEditMode);
-  };
-
+export default function LineItem({
+  line,
+  onDelete,
+  setLines,
+  setSnackbar,
+  setMessage,
+}) {
   return (
     <>
       <ListItem
         secondaryAction={
           <div>
-            <LineEditDialogButton line={line} setLines={setLines} />
+            <LineEditDialogButton
+              line={line}
+              setLines={setLines}
+              setSnackbar={setSnackbar}
+              setMessage={setMessage}
+            />
             <LineDeleteButton onDelete={onDelete} line={line} />
           </div>
         }
