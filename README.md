@@ -1,7 +1,5 @@
 ## 🚀 Getting Started
 
-### Usage
-
 #### local 구동
 
 ```
@@ -16,8 +14,6 @@ npm run dev
 ```
 npm run prod
 ```
-
-
 
 <br>
 
