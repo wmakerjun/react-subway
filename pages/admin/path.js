@@ -10,6 +10,7 @@ import {
   Select,
   Button,
   Divider,
+  TextField,
 } from "@mui/material";
 import Layout from "../../components/base/Layout";
 import stationApi from "../../apis/stationApi";
@@ -25,6 +26,7 @@ export default function PathAdmin() {
   const [stations, setStations] = useState([]);
   const [sourceStationId, setSourceStationId] = useState("");
   const [targetStationId, setTargetStationId] = useState("");
+  const [age, setAge] = useState(0);
   const [pathResult, setPathResult] = useState("");
   const [snackbar, setSnackbar] = useRecoilState(snackbarState);
   const [message, setMessage] = useState("");
@@ -43,6 +45,7 @@ export default function PathAdmin() {
       const response = await pathApi.getShortestPath({
         sourceId: sourceStationId,
         targetId: targetStationId,
+        age
       });
       setPathResult({ ...response });
       setMessage(SNACKBAR_MESSAGES.PATH.FIND.SUCCESS);
@@ -97,12 +100,23 @@ export default function PathAdmin() {
                   </Select>
                 </FormControl>
               </Box>
+              <FormControl sx={{ my: 1 }} fullWidth>
+                <TextField
+                  type="number"
+                  name="age"
+                  label="나이"
+                  variant="outlined"
+                  defaultValue={age}
+                  onChange={(e) => setAge(age)}
+                  required
+                />
+              </FormControl>
               <Button
                 type="submit"
                 variant="contained"
                 sx={{ width: "100%" }}
                 disableElevation
-                disabled={!sourceStationId || !targetStationId}
+                disabled={!(sourceStationId && targetStationId)}
               >
                 검색
               </Button>
