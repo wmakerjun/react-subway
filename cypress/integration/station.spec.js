@@ -1,6 +1,7 @@
 import { METHODS, BASE_URL, DEFAULT_STATION } from "../constants";
 
 const PAGE_URL = "http://localhost:3000/admin/station";
+
 describe("역 관리 페이지", () => {
   beforeEach(() => {
     cy.intercept(METHODS.GET, BASE_URL.STATIONS, []);

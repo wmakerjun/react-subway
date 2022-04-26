@@ -95,6 +95,7 @@ export default function LineEditDialogButton({
                   name="name"
                   defaultValue={name}
                   onChange={(e) => setName(e.target.value)}
+                  data-cy="line-name-input"
                   required
                 />
               </FormControl>
@@ -105,13 +106,14 @@ export default function LineEditDialogButton({
                   label="상행 종점 *"
                   value={upStationId || ""}
                   onChange={(e) => setUpStationId(e.target.value)}
+                  data-cy="up-station-select"
                   required
                 >
                   {stations.map((station) => (
                     <MenuItem
                       value={station.id}
                       key={station.id}
-                      className="up-station-item"
+                      data-cy="up-station-item"
                     >
                       {station.name}
                     </MenuItem>
@@ -125,10 +127,15 @@ export default function LineEditDialogButton({
                   value={downStationId || ""}
                   label="하행 종점 *"
                   onChange={(e) => setDownStationId(e.target.value)}
+                  data-cy="down-station-select"
                   required
                 >
                   {stations.map((station) => (
-                    <MenuItem value={station.id} key={station.id}>
+                    <MenuItem
+                      value={station.id}
+                      key={station.id}
+                      data-cy="down-station-item"
+                    >
                       {station.name}
                     </MenuItem>
                   ))}

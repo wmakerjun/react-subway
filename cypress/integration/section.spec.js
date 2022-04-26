@@ -26,19 +26,15 @@ const DEFAULT_LINE_RESPONSE = {
 describe("구간 관리 페이지", () => {
   beforeEach(() => {
     cy.intercept(METHODS.GET, BASE_URL.STATIONS, [...DEFAULT_STATIONS]);
-    cy.intercept(METHODS.GET, BASE_URL.LINES, [{ ...DEFAULT_LINE }]);
     cy.visit(PAGE_URL);
   });
 
   it("최초 구간 확인: 방배 => 서초", () => {
+    cy.intercept(METHODS.GET, BASE_URL.LINES, [{ ...DEFAULT_LINE }]);
     cy.intercept(METHODS.GET, `${BASE_URL.LINES}/${DEFAULT_LINE.id}`, [
       { ...DEFAULT_LINE_RESPONSE },
     ]);
     cy.get("[data-cy='line-select']").click();
     cy.get("li[data-cy='line-item']").contains(DEFAULT_LINE.name).click();
   });
-
-  xit("구간 생성", () => {});
-
-  xit("구간 삭제", () => {});
 });

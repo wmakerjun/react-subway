@@ -80,7 +80,13 @@ export default function LineCreateDialogButton({
           top: "-25px",
         }}
       >
-        <Fab color="primary" aria-label="add" onClick={onOpen} size="medium">
+        <Fab
+          color="primary"
+          aria-label="add"
+          onClick={onOpen}
+          size="medium"
+          data-cy="line-create-button"
+        >
           <AddIcon />
         </Fab>
       </Box>
@@ -106,13 +112,14 @@ export default function LineCreateDialogButton({
                   label="상행 종점 *"
                   value={upStationId}
                   onChange={(e) => setUpStationId(e.target.value)}
+                  data-cy="up-station-select"
                   required
                 >
                   {stations.map((station) => (
                     <MenuItem
                       value={station.id}
                       key={station.id}
-                      className="up-station-item"
+                      data-cy="up-station-item"
                     >
                       {station.name}
                     </MenuItem>
@@ -126,10 +133,15 @@ export default function LineCreateDialogButton({
                   value={downStationId}
                   label="하행 종점 *"
                   onChange={(e) => setDownStationId(e.target.value)}
+                  data-cy="down-station-select"
                   required
                 >
                   {stations.map((station) => (
-                    <MenuItem value={station.id} key={station.id}>
+                    <MenuItem
+                      value={station.id}
+                      key={station.id}
+                      data-cy="down-station-item"
+                    >
                       {station.name}
                     </MenuItem>
                   ))}
