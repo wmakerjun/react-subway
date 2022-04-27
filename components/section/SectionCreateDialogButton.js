@@ -68,72 +68,80 @@ export default function SectionCreateDialogButton({
           top: "30px",
         }}
       >
-        <Fab color="primary" aria-label="add" onClick={onOpen} size="medium">
+        <Fab
+          color="primary"
+          aria-label="add"
+          onClick={onOpen}
+          size="medium"
+          data-cy="section-create-button"
+        >
           <AddIcon />
         </Fab>
       </Box>
-      <Dialog open={open} onClose={onClose}>
-        <DialogTitle>{line.name}의 구간 생성</DialogTitle>
-        <form onSubmit={onSubmit}>
-          <DialogContent sx={{ p: 3 }}>
-            <FormControl sx={{ my: 1 }} fullWidth>
-              <InputLabel id="up-station-label">상행 종점</InputLabel>
-              <Select
-                labelId="up-station-label"
-                label="상행 종점"
-                value={upStationId}
-                onChange={(e) => setUpStationId(e.target.value)}
-                data-cy="up-station-select"
-                required
-              >
-                {stations.map((station) => (
-                  <MenuItem
-                    value={station.id}
-                    key={station.id}
-                    data-cy="up-station-item"
-                  >
-                    {station.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl sx={{ my: 1 }} fullWidth>
-              <InputLabel id="down-station-label">하행 종점</InputLabel>
-              <Select
-                labelId="down-station-label"
-                value={downStationId}
-                label="하행 종점"
-                onChange={(e) => setDownStationId(e.target.value)}
-                data-cy="down-station-select"
-                required
-              >
-                {stations.map((station) => (
-                  <MenuItem
-                    value={station.id}
-                    key={station.id}
-                    data-cy="down-station-item"
-                  >
-                    {station.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl sx={{ my: 1 }} fullWidth>
-              <TextField
-                type="number"
-                name="distance"
-                label="거리"
-                variant="outlined"
-                onChange={(e) => setDistance(Number(e.target.value))}
-                required
-              />
-            </FormControl>
-          </DialogContent>
-          <DialogActions>
-            <Button type="submit">생성</Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+      <Box sx={{ p: 2 }}>
+        <Dialog open={open} onClose={onClose}>
+          <DialogTitle>{line.name}의 구간 생성</DialogTitle>
+          <form onSubmit={onSubmit}>
+            <DialogContent sx={{ p: 3 }}>
+              <FormControl sx={{ my: 1 }} fullWidth>
+                <InputLabel id="up-station-label">상행 종점 *</InputLabel>
+                <Select
+                  labelId="up-station-label"
+                  label="상행 종점 *"
+                  value={upStationId}
+                  onChange={(e) => setUpStationId(e.target.value)}
+                  data-cy="up-station-select"
+                  required
+                >
+                  {stations.map((station) => (
+                    <MenuItem
+                      value={station.id}
+                      key={station.id}
+                      data-cy="up-station-item"
+                    >
+                      {station.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl sx={{ my: 1 }} fullWidth>
+                <InputLabel id="down-station-label">하행 종점 *</InputLabel>
+                <Select
+                  labelId="down-station-label"
+                  value={downStationId}
+                  label="하행 종점 *"
+                  onChange={(e) => setDownStationId(e.target.value)}
+                  data-cy="down-station-select"
+                  required
+                >
+                  {stations.map((station) => (
+                    <MenuItem
+                      value={station.id}
+                      key={station.id}
+                      data-cy="down-station-item"
+                    >
+                      {station.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl sx={{ my: 1 }} fullWidth>
+                <TextField
+                  type="number"
+                  name="distance"
+                  label="거리"
+                  variant="outlined"
+                  onChange={(e) => setDistance(Number(e.target.value))}
+                  required
+                />
+              </FormControl>
+            </DialogContent>
+            <DialogActions>
+              <Button type="submit">생성</Button>
+            </DialogActions>
+          </form>
+        </Dialog>
+      </Box>
     </>
   );
 }

@@ -56,8 +56,8 @@ export default function Section() {
 
   const onChangeLine = async (e) => {
     try {
-      const line = await lineApi.get(e.target.value);
-      setLine({ ...line });
+      const lineResponse = await lineApi.get(e.target.value);
+      await setLine({ ...lineResponse });
     } catch (e) {
       throw new Error(e);
     }
@@ -99,7 +99,6 @@ export default function Section() {
               >
                 <Typography variant="h6">{line.name}</Typography>
               </Box>
-
               {line.stations?.length > 0 && (
                 <>
                   <SectionCreateDialogButton
