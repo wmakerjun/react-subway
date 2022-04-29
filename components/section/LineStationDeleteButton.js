@@ -6,7 +6,7 @@ export default function LineStationDeleteButton({ onDelete, station }) {
     <IconButton
       edge="end"
       aria-label="delete"
-      data-cy="line-delete-button"
+      data-cy="section-delete-button"
       onClick={() => onDelete({ stationId: station.id })}
     >
       <DeleteIcon />

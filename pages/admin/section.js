@@ -40,7 +40,7 @@ export default function Section() {
   const onDelete = async ({ stationId }) => {
     if (!confirm("정말로 삭제하시겠습니까?")) return;
     try {
-      await lineApi.deleteLineStation({
+      const reseponse = await lineApi.deleteLineStation({
         lineId: line.id,
         stationId: stationId,
       });
