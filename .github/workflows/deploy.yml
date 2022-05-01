@@ -20,10 +20,10 @@ jobs:
             ${{ runner.os }}-node-modules-
       - name: Install Dependencies
         run: |
-          yarn
+          npm install
       - name: Build
         run: |
-          yarn build
+          npm run prod
         env:
           CI: false
 
