@@ -84,10 +84,10 @@ export default function SectionCreateDialogButton({
           <form onSubmit={onSubmit}>
             <DialogContent sx={{ p: 3 }}>
               <FormControl sx={{ my: 1 }} fullWidth>
-                <InputLabel id="up-station-label">상행 종점 *</InputLabel>
+                <InputLabel id="up-station-label">상행역 *</InputLabel>
                 <Select
                   labelId="up-station-label"
-                  label="상행 종점 *"
+                  label="상행역 *"
                   value={upStationId}
                   onChange={(e) => setUpStationId(e.target.value)}
                   data-cy="up-station-select"
@@ -105,11 +105,11 @@ export default function SectionCreateDialogButton({
                 </Select>
               </FormControl>
               <FormControl sx={{ my: 1 }} fullWidth>
-                <InputLabel id="down-station-label">하행 종점 *</InputLabel>
+                <InputLabel id="down-station-label">하행역 *</InputLabel>
                 <Select
                   labelId="down-station-label"
                   value={downStationId}
-                  label="하행 종점 *"
+                  label="하행역 *"
                   onChange={(e) => setDownStationId(e.target.value)}
                   data-cy="down-station-select"
                   required
