@@ -24,7 +24,7 @@ export default function PathResult({ pathResult }) {
       <Divider />
       <Box sx={{ mt: 1 }}>
         {pathResult.stations?.map((station, index) => (
-          <span key={station.id}>
+          <span key={station.id} data-cy="path-result-station">
             <Chip label={station.name} sx={{ mx: 1 }} />
             {index < pathResult.stations.length - 1 && (
               <ArrowForwardIcon sx={{ position: "relative", top: "6px" }} />
