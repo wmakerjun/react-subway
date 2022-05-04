@@ -45,7 +45,7 @@ export default function PathAdmin() {
       const response = await pathApi.getShortestPath({
         sourceId: sourceStationId,
         targetId: targetStationId,
-        age
+        age,
       });
       setPathResult({ ...response });
       setMessage(SNACKBAR_MESSAGES.PATH.FIND.SUCCESS);
@@ -67,16 +67,21 @@ export default function PathAdmin() {
             <form onSubmit={onSubmit}>
               <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                 <FormControl sx={{ mr: 1 }} fullWidth>
-                  <InputLabel id="source-station-label">출발역</InputLabel>
+                  <InputLabel id="source-station-label">출발역 *</InputLabel>
                   <Select
                     labelId="source-station-label"
-                    label="출발역"
+                    label="출발역 *"
                     value={sourceStationId}
                     onChange={(e) => setSourceStationId(e.target.value)}
+                    data-cy="source-station-select"
                     required
                   >
                     {stations.map((station) => (
-                      <MenuItem value={station.id} key={station.id}>
+                      <MenuItem
+                        value={station.id}
+                        key={station.id}
+                        data-cy="source-station"
+                      >
                         {station.name}
                       </MenuItem>
                     ))}
@@ -84,16 +89,21 @@ export default function PathAdmin() {
                 </FormControl>
                 <ArrowForwardIcon />
                 <FormControl sx={{ ml: 1 }} fullWidth>
-                  <InputLabel id="target-station-label">도착역</InputLabel>
+                  <InputLabel id="target-station-label">도착역 *</InputLabel>
                   <Select
                     labelId="target-station-label"
-                    label="도착역"
+                    label="도착역 *"
                     value={targetStationId}
                     onChange={(e) => setTargetStationId(e.target.value)}
+                    data-cy="target-station-select"
                     required
                   >
                     {stations.map((station) => (
-                      <MenuItem value={station.id} key={station.id}>
+                      <MenuItem
+                        value={station.id}
+                        key={station.id}
+                        data-cy="target-station"
+                      >
                         {station.name}
                       </MenuItem>
                     ))}

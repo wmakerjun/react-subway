@@ -13,6 +13,7 @@ export const METHODS = {
 export const BASE_URL = {
   STATIONS: "/stations",
   LINES: "/lines",
+  PATH: "/paths",
 };
 
 export const DEFAULT_STATIONS = [
