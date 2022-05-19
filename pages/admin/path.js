@@ -107,7 +107,7 @@ export default function PathAdmin() {
                   label="나이"
                   variant="outlined"
                   defaultValue={age}
-                  onChange={(e) => setAge(age)}
+                  onChange={(e) => setAge(e.target.value)}
                   required
                 />
               </FormControl>
